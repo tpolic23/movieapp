@@ -27,9 +27,12 @@ class Profile extends Component<Props>  {
     }
 }
 
+/**
+ * Needs to go before the list, because Stack is using Tab Navigator
+ */
 const TabNavigator = createBottomTabNavigator({
     Home: { screen: MovieList },
-    Settings: { screen: Profile },
+    Profile: { screen: Profile },
 });
 
 const Stack = createStackNavigator({

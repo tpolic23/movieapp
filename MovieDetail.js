@@ -68,7 +68,8 @@ export default class MovieDetail extends React.Component {
         const {movie} = this.state;
 
         if (movie) {
-            const {title, release_date, original_language, runtime, overview, status, vote_average, vote_count, popularity, poster_path} = movie;
+            const {title, release_date, original_language, runtime,
+                overview, status, vote_average, vote_count, popularity, poster_path} = movie;
 
             return (
                 <ScrollView>

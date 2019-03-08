@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {FlatList, StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+
 type Props = {};
 
 export default class MovieList extends Component<Props> {
-    
-    state = { movies:[]}
+
+    state = {movies: []}
 
     _onPress = (id, originalTitle) => {
-        this.props.navigation.navigate('MovieDetail',{id:id, originalTitle: originalTitle});
+        this.props.navigation.navigate('MovieDetail', {id: id, originalTitle: originalTitle});
     };
 
     componentDidMount() {
@@ -27,6 +28,8 @@ export default class MovieList extends Component<Props> {
         console.log(this.state.movies);
 
         if (this.state.movies) {
+
+
             return (
                 <View style={styles.container}>
 
@@ -36,12 +39,14 @@ export default class MovieList extends Component<Props> {
                         renderItem={({item}) => {
                             return (
                                 <TouchableOpacity onPress={() => this._onPress(item.id, item.original_title)}>
-                                    <View>
+                                    <View style={{flexDirection: 'row', alignItems: 'flex-start', padding: 5}}>
+                                        <Image
+                                            source={{uri: 'https://image.tmdb.org/t/p/w200/' + item.poster_path + ''}}
+                                            style={{width: 70, height: 70, borderRadius: 35}}/>
                                         <Text style={styles.movies}>{item.original_title}</Text>
                                     </View>
                                 </TouchableOpacity>
                             );
-
 
 
                         }
@@ -53,6 +58,36 @@ export default class MovieList extends Component<Props> {
         }
     }
 }
+const styles = StyleSheet.create({
+    MainContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+        color: 'black',
+
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+    },
+    movies: {
+        paddingLeft: 10,
+        alignSelf: 'center',
+        fontSize: 18,
+    },
+    instructions: {
+        textAlign: 'center',
+        color: '#333333',
+        marginBottom: 1,
+    },
+});
 // class MovieDetails extends React.Component{
 //   render(){
 //       const { navigation } = this.props;
@@ -100,27 +135,3 @@ export default class MovieList extends Component<Props> {
 //         );
 //     }
 // }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-        color:'black',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    movies: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 1,
-    },
-});
