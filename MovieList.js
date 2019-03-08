@@ -3,6 +3,7 @@ import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 type Props = {};
 
 export default class MovieList extends Component<Props> {
+    
     state = { movies:[]}
 
     _onPress = (id, originalTitle) => {

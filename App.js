@@ -7,30 +7,39 @@
  */
 
 import React, {Component} from 'react';
-import {createAppContainer, createStackNavigator} from 'react-navigation';
+import { View, Text } from 'react-native';
+import {createAppContainer, createStackNavigator, createBottomTabNavigator,} from 'react-navigation';
 import MovieList from './MovieList'
 import MovieDetail from "./MovieDetail";
-
 
 class App extends Component<Props> {
     render() {
         return <Stack/>;
     }
 }
+class Profile extends Component<Props>  {
+    render() {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Profile!</Text>
+            </View>
+        );
+    }
+}
+
+const TabNavigator = createBottomTabNavigator({
+    Home: { screen: MovieList },
+    Settings: { screen: Profile },
+});
 
 const Stack = createStackNavigator({
-    MovieList: { screen: MovieList},
+    Main: { screen: TabNavigator},
     MovieDetail: { screen: MovieDetail }
 }, {
-    initialRouteName: 'MovieList',
-});
-const AppNavigator = createStackNavigator({
-    Home: {
-        screen: App
-    }
+    initialRouteName: 'Main',
 });
 
-export default createAppContainer(Stack);
+export default createAppContainer(Stack,TabNavigator);
 
 // export default class App extends Component<Props> {
 //     state = { movies:[] };
