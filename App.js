@@ -9,35 +9,42 @@
 import React, {Component} from 'react';
 import { View, Text } from 'react-native';
 import {createAppContainer, createStackNavigator, createBottomTabNavigator,} from 'react-navigation';
-import MovieList from './MovieList'
+import MovieList from './MovieList';
 import MovieDetail from "./MovieDetail";
+import Profile from './Profile';
+import TopRated from './TopRated';
+import TVShows from './TVShows';
+import TVDetail from './TVDetail';
 
 class App extends Component<Props> {
     render() {
         return <Stack/>;
     }
 }
-class Profile extends Component<Props>  {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Profile!</Text>
-            </View>
-        );
-    }
-}
+// class Profile.js extends Component<Props>  {
+//     render() {
+//         return (
+//             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//                 <Text>Profile.js!</Text>
+//             </View>
+//         );
+//     }
+// }
 
 /**
  * Needs to go before the list, because Stack is using Tab Navigator
  */
 const TabNavigator = createBottomTabNavigator({
-    Home: { screen: MovieList },
+    NawPlaying: { screen: MovieList },
     Profile: { screen: Profile },
+    TopRated: { screen: TopRated },
+    TVShows: { screen: TVShows },
 });
 
 const Stack = createStackNavigator({
     Main: { screen: TabNavigator},
-    MovieDetail: { screen: MovieDetail }
+    MovieDetail: { screen: MovieDetail },
+    TVDetail: { screen: TVDetail }
 }, {
     initialRouteName: 'Main',
 });
