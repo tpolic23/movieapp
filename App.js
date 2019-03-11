@@ -36,9 +36,9 @@ class App extends Component<Props> {
  */
 const TabNavigator = createBottomTabNavigator({
     NawPlaying: { screen: MovieList },
-    Profile: { screen: Profile },
-    TopRated: { screen: TopRated },
+   TopRated: { screen: TopRated },
     TVShows: { screen: TVShows },
+    Profile: { screen: Profile },
 });
 
 const Stack = createStackNavigator({

@@ -10,9 +10,9 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: '#d6d7da',
     },
-    title: {
+    name: {
         marginTop: 20,
-        marginLeft: 20,
+        marginLeft: 16,
         fontSize: 30,
         fontWeight: 'bold',
     },
@@ -68,21 +68,21 @@ export default class TVDetail extends React.Component {
         const {movie} = this.state;
 
         if (movie) {
-            const {name, first_air_date, original_language, runtime,
+            const {name, first_air_date, original_language,
                 overview, status, vote_average, vote_count, popularity, poster_path} = movie;
 
             return (
                 <ScrollView>
                     <View style={{flex: 1, flexDirection: 'column'}}>
 
-                        <Text style={[styles.title]}>{name} </Text>
+                        <Text style={[styles.name]}>{name} </Text>
                         <View style={{flexDirection: 'column'}}>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{
                                     flex: 100,
                                     fontSize: 20,
                                     alignSelf: 'flex-start',
-                                    marginLeft: 20
+                                    marginLeft: 16
                                 }}> {status}</Text>
 
                                 <Text style={{
@@ -105,17 +105,15 @@ export default class TVDetail extends React.Component {
                                style={{width: 300, height: 420, marginTop: 10, alignItem: 'center',marginLeft: 35}}/>
                         <View style={{flexDirection: 'row', justifyContent: 'center',marginTop:10}}>
 
+
                             <Text style={{
-                                flex: 100,
-                                marginLeft: 25,
-                                fontSize: 20
-                            }}> {runtime} min</Text>
-                            <Text style={{
-                                flex: 100,
-                                fontSize: 20
+                                flex: 1,
+                                alignSelf: 'flex-start',
+                                fontSize: 20,
+                                marginLeft: 100
                             }}> {first_air_date}</Text>
                             <Text style={{
-                                flex: 100,
+                                flex: 1,
                                 marginLeft: 10,
                                 alignSelf: 'flex-end',
                                 fontSize: 20
