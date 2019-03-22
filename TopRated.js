@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import ListItem from "./ListItem";
 type Props = {};
 
@@ -68,11 +68,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         margin: 10,
-    },
-    movies: {
-        paddingLeft: 10,
-        alignSelf: 'center',
-        fontSize: 18,
     },
     instructions: {
         textAlign: 'center',

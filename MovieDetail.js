@@ -1,7 +1,5 @@
 import React, {Component} from "react";
-import {Text, View, Button, FlatList, Image, ScrollView, StyleSheet} from "react-native";
-import MovieList from "./MovieList";
-import {createStackNavigator} from 'react-navigation';
+import {Text, View, Image, ScrollView, StyleSheet} from "react-native";
 
 
 const styles = StyleSheet.create({
@@ -35,20 +33,22 @@ const styles = StyleSheet.create({
 
 });
 
-export default class MovieDetail extends React.Component {
+export default class MovieDetail extends Component {
 
     state = {
         movie: null,
+        isLoading: false,
     };
 
     componentDidMount() {
         const {navigation} = this.props;
         const id = navigation.getParam('id');
-        console.log('id');
-        console.log(id);
+
+        this.setState({isLoading: true});
 
         fetch('https://api.themoviedb.org/3/movie/' + id + '?api_key=df7dcf624bfe76dee38127fa88121b87&language=en-US')
             .then((response) => {
+                this.setState({isLoading: false});
                 return response.json();
             })
             .then((responseJson) => {
@@ -56,6 +56,7 @@ export default class MovieDetail extends React.Component {
                 this.setState({movie: responseJson});
             })
             .catch((error) => {
+                this.setState({isLoading: false});
                 console.error(error);
             });
     }
@@ -65,7 +66,11 @@ export default class MovieDetail extends React.Component {
         const {navigation} = this.props;
         const id = navigation.getParam('id');
 
-        const {movie} = this.state;
+        const {movie, isLoading} = this.state;
+
+        if (isLoading) {
+            return <Text>Loading</Text>
+        }
 
         if (movie) {
             const {title, release_date, original_language, runtime,
@@ -132,10 +137,7 @@ export default class MovieDetail extends React.Component {
                     </View>
                 </ScrollView>
             );
-        } else {
-            return <Text>Sorry, there is no selected movie</Text>
         }
-
-
+        return <Text>Sorry, there is no selected movie</Text>
     }
 }

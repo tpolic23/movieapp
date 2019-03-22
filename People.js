@@ -4,19 +4,19 @@ import ListItem from "./ListItem";
 
 type Props = {};
 
-export default class MovieList extends Component<Props> {
+export default class People extends Component<Props> {
 
-    state = {movies: []}
+    state = {people: []}
 
     _onPress = (item) => {
-        this.props.navigation.navigate('MovieDetail', {id: item.id, originalTitle: item.name});
+        this.props.navigation.navigate('People', {id: item.id, name: item.name});
     };
 
     componentDidMount() {
-        fetch('https://api.themoviedb.org/3/trending/movie/week?api_key=df7dcf624bfe76dee38127fa88121b87')
+        fetch('https://api.themoviedb.org/3/person/popular?api_key=df7dcf624bfe76dee38127fa88121b87')
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({movies: responseJson.results});
+                this.setState({people: responseJson.results});
             })
             .catch((error) => {
                 console.error(error);
@@ -26,22 +26,22 @@ export default class MovieList extends Component<Props> {
     renderItem = ({item}) => (
         <ListItem
             id={item.id}
-            name={item.original_title}
-            avatar={'https://image.tmdb.org/t/p/w200/' + item.poster_path}
+            name={item.name}
+            avatar={'https://image.tmdb.org/t/p/w200/' + item.profile_path}
             onPress={this._onPress}
         />
     );
 
     render() {
         console.log("render");
-        console.log(this.state.movies);
+        console.log(this.state.people);
 
-        if (this.state.movies) {
-             return (
+        if (this.state.people) {
+            return (
                 <View style={styles.container}>
 
                     <FlatList
-                        data={this.state.movies}
+                        data={this.state.people}
                         keyExtractor={(item, index) => index}
                         renderItem={this.renderItem}
 
