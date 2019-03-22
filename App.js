@@ -16,6 +16,7 @@ import TopRated from './TopRated';
 import People from './People';
 import TVShows from './TVShows';
 import TVDetail from './TVDetail';
+import PeopleDetail from './PeopleDetail';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class App extends Component<Props> {
@@ -90,7 +91,7 @@ const TabNavigator = createBottomTabNavigator({
 const Stack = createStackNavigator({
     Main: {screen: TabNavigator},
     MovieDetail: {screen: MovieDetail},
-    Stars: {screen: People},
+    PeopleDetail: {screen: PeopleDetail},
     TVDetail: {screen: TVDetail}
 }, {
     initialRouteName: 'Main',

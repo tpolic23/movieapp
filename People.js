@@ -6,10 +6,10 @@ type Props = {};
 
 export default class People extends Component<Props> {
 
-    state = {people: []}
+    state = {people: []};
 
     _onPress = (item) => {
-        this.props.navigation.navigate('People', {id: item.id, name: item.name});
+        this.props.navigation.navigate('PeopleDetail', {id: item.id, name: item.name});
     };
 
     componentDidMount() {
