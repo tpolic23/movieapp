@@ -11,6 +11,7 @@ import { View, Text } from 'react-native';
 import {createAppContainer, createStackNavigator, createBottomTabNavigator,} from 'react-navigation';
 import MovieList from './MovieList';
 import MovieDetail from "./MovieDetail";
+// import Icon from 'react-native-vector-icons/FontAwesome';
 import Profile from './Profile';
 import TopRated from './TopRated';
 import TVShows from './TVShows';
@@ -26,7 +27,7 @@ class App extends Component<Props> {
 //         return (
 //             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 //                 <Text>Profile.js!</Text>
-//             </View>
+//             </View>import Icon from 'react-native-vector-icons/FontAwesome';
 //         );
 //     }
 // }
@@ -35,10 +36,39 @@ class App extends Component<Props> {
  * Needs to go before the list, because Stack is using Tab Navigator
  */
 const TabNavigator = createBottomTabNavigator({
-    NawPlaying: { screen: MovieList },
+    NawPlaying: { screen: MovieList
+        // ,
+        // navigationOptions: {
+        //     tabBarLabel: 'Home',
+        //     tabBarIcon: ({tintColor, activeTintColor}) => (
+        //         <Icon name="home" size={30} color={tintColor} />
+        //     )
+        // },
+        },
    TopRated: { screen: TopRated },
     TVShows: { screen: TVShows },
-    Profile: { screen: Profile },
+    Profile: { screen: Profile,
+    // //     navigationOptions: {
+    // //         tabBarLabel: 'Home',
+    // //         tabBarIcon: ({tintColor, activeTintColor}) => (
+    // //             <Icon name="home" size={30} color={tintColor} />
+    // //         )
+    // //     },
+    },
+    },
+{
+
+        tabBarOptions: {
+        activeTintColor: '#fb9800',
+        inactiveTintColor: '#7e7b7b',
+        showIcon: true,
+        style: { height: 54,backgroundColor: '#fff',borderTopWidth:0.5,borderTopColor: '#fb9800' },
+        showLabel: true,
+        labelStyle: {
+        fontSize: 10,
+
+    }
+}
 });
 
 const Stack = createStackNavigator({

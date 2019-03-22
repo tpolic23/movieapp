@@ -139,17 +139,3 @@ export default class MovieDetail extends React.Component {
 
     }
 }
-// const RootStack = createStackNavigator(
-//     {
-//         MovieList: { screen: MovieList},
-//         MovieDetail: { screen: MovieDetail }
-//     },
-//     {
-//         initialRouteName: 'MovieList',
-//     }
-// );
-// export default class App extends React.Component {
-//     render() {
-//         return <RootStack />;
-//     }
-// }

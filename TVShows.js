@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {FlatList, StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import ListItem from "./ListItem";
 
 type Props = {};
 
 export default class TVShows extends Component<Props> {
 
-    state = {movies: []}
+    state = {movies: []};
 
-    _onPress = (id, originalTitle) => {
-        this.props.navigation.navigate('TVDetail', {id: id, originalTitle: originalTitle});
+    _onPress = (item) => {
+        this.props.navigation.navigate('TVDetail', {id: item.id, originalTitle: item.name});
     };
 
     componentDidMount() {
@@ -22,42 +23,35 @@ export default class TVShows extends Component<Props> {
             });
     }
 
+    renderItem = ({item}) => (
+        <ListItem
+            id={item.id}
+            name={item.original_name}
+            avatar={'https://image.tmdb.org/t/p/w200/' + item.poster_path}
+            onPress={this._onPress}
+        />
+    );
 
     render() {
         console.log("render");
         console.log(this.state.movies);
 
         if (this.state.movies) {
-
-
             return (
                 <View style={styles.container}>
-
                     <FlatList
                         data={this.state.movies}
                         keyExtractor={(item, index) => index}
-                        renderItem={({item}) => {
-                            return (
-                                <TouchableOpacity onPress={() => this._onPress(item.id, item.original_name)}>
-                                    <View style={{flexDirection: 'row', alignItems: 'flex-start', padding: 5}}>
-                                        <Image
-                                            source={{uri: 'https://image.tmdb.org/t/p/w200/' + item.poster_path + ''}}
-                                            style={{width: 70, height: 70, borderRadius: 35}}/>
-                                        <Text style={styles.movies}>{item.original_name}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            );
-
-
-                        }
-                        }
-                    /></View>
+                        renderItem={this.renderItem}
+                    />
+                </View>
             );
         } else {
             return <Text style={styles.movies}>Empty</Text>
         }
     }
 }
+
 const styles = StyleSheet.create({
     MainContainer: {
         justifyContent: 'center',
@@ -77,61 +71,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         margin: 10,
     },
-    movies: {
-        paddingLeft: 10,
-        alignSelf: 'center',
-        fontSize: 18,
-    },
     instructions: {
         textAlign: 'center',
         color: '#333333',
         marginBottom: 1,
     },
 });
-// class MovieDetails extends React.Component{
-//   render(){
-//       const { navigation } = this.props;
-//       const id = navigation.getParam('id', 'NO-ID');
-//       const otherParam = navigation.getParam('otherParam', 'somethiing');
-//       return (
-//
-//           );
-//
-//               }
-
-// }
-// class Navigation extends React.Component {
-//     static propTypes = {
-//         route: PropTypes.shape({
-//             title: PropTypes.string.isRequied,
-//         }),
-//         navigator: PropTypes.object.isRequied,
-//     };
-//
-//     constructor(props, context) {
-//         super(props, context);
-//         this._onFoward = this._onFoward.bind(this);
-//
-//     }
-//
-//     _onFoward() {
-//         let nextIndex = ++this.props.index;
-//         this.props.navigator.push({
-//             component: Navigation,
-//             title: 'Movie 2' + nextIndex,
-//             passProps: {index: nextIndex},
-//         });
-//     }
-//
-//     render() {
-//         return (
-//             <View>
-//                 <Text>Current Scene: {this.props.title}</Text>
-//                 <Button
-//                     onPress={this.onFoward}
-//                     title="Next Page"
-//                 />
-//             </View>
-//         );
-//     }
-// }
