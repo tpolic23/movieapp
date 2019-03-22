@@ -17,8 +17,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     popularity: {
-        margin: 10,
-        alignSelf: 'center'
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        marginBottom:20,
+        fontSize: 20
     },
     overview: {
         marginLeft: 20,

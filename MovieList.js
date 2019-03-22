@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View, Button} from 'react-native';
 import ListItem from "./ListItem";
 
 type Props = {};
 
 export default class MovieList extends Component<Props> {
-
     state = {movies: []}
 
     _onPress = (item) => {
@@ -60,11 +59,8 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F5FCFF',
         color: 'black',
-
     },
     welcome: {
         fontSize: 20,

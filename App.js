@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Button} from 'react-native';
 import {createAppContainer, createStackNavigator, createBottomTabNavigator,} from 'react-navigation';
 import MovieList from './MovieList';
 import MovieDetail from "./MovieDetail";
@@ -18,6 +18,7 @@ import TVShows from './TVShows';
 import TVDetail from './TVDetail';
 import PeopleDetail from './PeopleDetail';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Search from "./Search";
 
 class App extends Component<Props> {
     render() {
@@ -29,11 +30,10 @@ class App extends Component<Props> {
  * Needs to go before the list, because Stack is using Tab Navigator
  */
 const TabNavigator = createBottomTabNavigator({
-        NawPlaying: {
-            screen: MovieList
-            ,
+        Trending: {
+            screen: MovieList,
             navigationOptions: {
-                tabBarLabel: 'Now Playing',
+                tabBarLabel: 'Trending',
                 tabBarIcon: ({tintColor, activeTintColor}) => (
                     <Icon name="film" size={20} color={tintColor} />
                 )
@@ -66,7 +66,7 @@ const TabNavigator = createBottomTabNavigator({
         Profile: {
             screen: Profile,
             navigationOptions: {
-                tabBarLabel: 'Now Playing',
+                tabBarLabel: 'Profile',
                 tabBarIcon: ({tintColor, activeTintColor}) => (
                     <Icon name="user-o" size={20} color={tintColor} />
                 )
@@ -74,11 +74,14 @@ const TabNavigator = createBottomTabNavigator({
 
         },
     },
+
     {
+
         tabBarOptions: {
             activeTintColor: '#fb9800',
             inactiveTintColor: '#7e7b7b',
             showIcon: true,
+
             style: {height: 54, backgroundColor: '#fff', borderTopWidth: 0.5, borderTopColor: '#fb9800'},
             showLabel: true,
             labelStyle: {
@@ -88,11 +91,27 @@ const TabNavigator = createBottomTabNavigator({
         }
     });
 
+TabNavigator.navigationOptions = ({ navigation }) => {
+    const index = navigation.state.index;
+    const title = navigation.state.routes[index].routeName;
+    return {
+        title: title,
+        headerRight: (
+            <Button
+                onPress={() => navigation.navigate('Search')}
+                title="Search"
+                color="gray"
+            />
+        ),
+    };
+};
+
 const Stack = createStackNavigator({
     Main: {screen: TabNavigator},
     MovieDetail: {screen: MovieDetail},
     PeopleDetail: {screen: PeopleDetail},
-    TVDetail: {screen: TVDetail}
+    TVDetail: {screen: TVDetail},
+    Search: {screen: Search}
 }, {
     initialRouteName: 'Main',
 });
