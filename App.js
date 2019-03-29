@@ -97,11 +97,9 @@ TabNavigator.navigationOptions = ({ navigation }) => {
     return {
         title: title,
         headerRight: (
-            <Button
-                onPress={() => navigation.navigate('Search')}
-                title="Search"
-                color="gray"
-            />
+
+            <Icon name="search" size={23}
+        style={{flex: 1, alignSelf: 'center', marginRight: 20}}   onPress={() => navigation.navigate('Search')}  color="gray"/>
         ),
     };
 };

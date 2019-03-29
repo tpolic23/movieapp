@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {View, TextInput, StyleSheet, FlatList, Button} from 'react-native'
 import ListItem from "./ListItem";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Search extends Component<Props> {
     state = {results: []}
@@ -69,11 +70,11 @@ export default class Search extends Component<Props> {
             return (
                 <View style={styles.container}>
                     <View
-                        style={{flexDirection: 'row', alignSelf: 'flex-start', padding: 5}}
+                        style={{flexDirection: 'row', alignSelf: 'flex-start', alignItems: 'center', padding: 5}}
                     >
                         <TextInput
                             style={{
-                                flex: 5,
+                                flex: 7,
                                 fontSize: 18,
                                 padding: 6,
                                 textAlign: 'center',
@@ -86,12 +87,11 @@ export default class Search extends Component<Props> {
                             onChangeText={(term) => this.setState({term})}
                             value={this.state.text}
                         />
-                        <Button
-                            style={{flex: 1}}
-                            onPress={this.search}
-                            title="Search"
-                            color="gray"
-                        />
+                        <Icon name="search" size={23}
+                              style={{flex: 1}} onPress={this.search}  color="gray"/>
+
+
+
                     </View>
                     <FlatList
                         data={this.state.results}
