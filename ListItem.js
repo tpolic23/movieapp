@@ -28,9 +28,11 @@ class ListItem extends Component {
                         style={{width: 70, height: 70, borderRadius: 35}}/>
                     <Text style={styles.movies}>{name}</Text>
                 </View>
+
             </TouchableOpacity>
 
         );
+
     }
 }
 

@@ -28,6 +28,7 @@ export default class MovieList extends Component<Props> {
             name={item.original_title}
             avatar={'https://image.tmdb.org/t/p/w200/' + item.poster_path}
             onPress={this._onPress}
+
         />
     );
 

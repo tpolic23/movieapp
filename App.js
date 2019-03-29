@@ -97,9 +97,12 @@ TabNavigator.navigationOptions = ({ navigation }) => {
     return {
         title: title,
         headerRight: (
-
+            /**
+             * Search icon (button) instead real button added
+             */
             <Icon name="search" size={23}
-        style={{flex: 1, alignSelf: 'center', marginRight: 20}}   onPress={() => navigation.navigate('Search')}  color="gray"/>
+        style={{flex: 1, alignSelf: 'center', marginRight: 20}}
+                  onPress={() => navigation.navigate('Search')}  color="gray"/>
         ),
     };
 };
