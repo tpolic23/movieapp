@@ -60,7 +60,7 @@ export default class Search extends Component<Props> {
      * when clicking it will open PersonDetail screen with details
      */
     onPersonDetailPress=(item)=>{
-         this.props.navigation.navigate('PersonDetail', { id: item.id});
+         this.props.navigation.navigate('PeopleDetail', { id: item.id});
     };
 
 
