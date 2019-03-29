@@ -72,7 +72,7 @@ export default class MovieDetail extends Component {
         const {movie, isLoading} = this.state;
 
         if (isLoading) {
-            return <Text>Loading</Text>
+            return <Text style={{alignSelf:'center', fontSize:20,fontWeight:'bold', paddingTop:260}}>Loading</Text>
         }
 
         if (movie) {
