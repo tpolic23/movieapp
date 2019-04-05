@@ -19,6 +19,7 @@ import TVDetail from './TVDetail';
 import PeopleDetail from './PeopleDetail';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Search from "./Search";
+import Enter from "./Enter";
 
 class App extends Component<Props> {
     render() {
@@ -30,6 +31,7 @@ class App extends Component<Props> {
  * Needs to go before the list, because Stack is using Tab Navigator
  */
 const TabNavigator = createBottomTabNavigator({
+
         Trending: {
             screen: MovieList,
             navigationOptions: {
@@ -108,7 +110,8 @@ TabNavigator.navigationOptions = ({ navigation }) => {
 };
 
 const Stack = createStackNavigator({
-    Main: {screen: TabNavigator},
+    Main:{screen:Enter},
+    First: {screen: TabNavigator},
     MovieDetail: {screen: MovieDetail},
     PeopleDetail: {screen: PeopleDetail},
     TVDetail: {screen: TVDetail},
