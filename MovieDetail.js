@@ -64,6 +64,17 @@ export default class MovieDetail extends Component {
             });
     }
 
+    renderGenres = (genres) => {
+        if (Array.isArray(genres)) {
+            genres.forEach(genre => {
+                console.log(genre.name);
+                return (
+                    <Text style={{color: 'black'}}>{genre.name}</Text>
+                )
+            });
+        }
+    };
+
 
     render() {
         const {navigation} = this.props;
@@ -77,7 +88,7 @@ export default class MovieDetail extends Component {
 
         if (movie) {
             const {
-                title, release_date, original_language, runtime,
+                title, release_date, original_language, runtime, genres,
                 overview, status, vote_average, vote_count, popularity, poster_path, budget
             } = movie;
 
@@ -86,28 +97,23 @@ export default class MovieDetail extends Component {
                     <View style={{flex: 1, flexDirection: 'column'}}>
 
                         <Text style={[styles.title]}>{title} </Text>
-                        <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row'}}>
+                        <View style={{flexDirection: 'row', marginLeft: 20, marginRight: 20}}>
                                 <Text style={{
-                                    flex: 100,
+                                    flex: 1,
                                     fontSize: 20,
                                     alignSelf: 'flex-start',
-                                    marginLeft: 20
+
                                 }}> {status}</Text>
 
                                 <Text style={{
-                                    flex: 100,
+                                    fontSize: 20,
+                                    marginRight: 10,
+                                }}>Rate: {vote_average}/10</Text>
+
+                                <Text style={{
                                     alignSelf: 'flex-end',
                                     fontSize: 20,
-                                    marginLeft: 190
-                                }}>{vote_average}/10</Text>
-                            </View>
-                            <Text style={{
-                                flex: 100,
-                                alignSelf: 'flex-end',
-                                fontSize: 15,
-                                marginRight: 30
-                            }}>{vote_count}</Text>
+                                }}>Voted: {vote_count}</Text>
                         </View>
 
 
@@ -124,17 +130,13 @@ export default class MovieDetail extends Component {
                                 flex: 100,
                                 fontSize: 20
                             }}> {release_date}</Text>
-                            <Text style={{
-                                flex: 100,
-                                marginLeft: 10,
-                                alignSelf: 'flex-end',
-                                fontSize: 20
-                            }}> {original_language}</Text>
                         </View>
-
 
                         <Text style={[styles.overview]}> {overview}</Text>
 
+                        {/*<View style={{backgroundColor: 'red'}}>*/}
+                        {/*{this.renderGenres(genres)}*/}
+                        {/*</View>*/}
                         <Text style={[styles.popularity]}>Popularity: {popularity}</Text>
                         <Text style={[styles.popularity]}>Budget: {budget}$</Text>
 
