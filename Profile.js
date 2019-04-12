@@ -1,39 +1,45 @@
-
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {FlatList, StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, Button} from 'react-native';
+
 type Props = {};
 export default class Profile extends Component<Props> {
 
+
     render() {
+        const {navigate} = this.props.navigation;
         return (
+
             <View style={styles.container}>
-                <View style={styles.header}></View>
+                <View style={styles.header}/>
                 <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
                 <View style={styles.body}>
-                    <View style={styles.bodyContent}>
-                        <Text style={styles.name}>John Doe</Text>
-                        <Text style={styles.info}>UX Designer / Mobile developer</Text>
-                        <Text style={styles.description}>Lorem
-                            ipsum dolor sit amet, saepe sapientem eu nam.
-                            Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
-
-                        <TouchableOpacity style={styles.buttonContainer}>
-                            <Text>Opcion 1</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonContainer}>
-                            <Text>Opcion 2</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <Text style={styles.info}>
+                        Guest</Text>
+                    <Text style={styles.info2}>
+                        #871530364528121</Text>
                 </View>
+
+                <View style={styles.bottom}>
+                    <Text style={styles.info3}>To rate movie, tv shows and people please Log In</Text>
+                    <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate('Main')}>
+                        <Button
+                            onPress={() => navigate('Main')}
+                            title="Log In"
+                            color="#ffff"
+                        />
+                    </TouchableOpacity>
+                </View>
+
+
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    header:{
-        backgroundColor: "#00BFFF",
-        height:200,
+    header: {
+        backgroundColor: '#ffc830',
+        height: 100,
     },
     avatar: {
         width: 130,
@@ -41,45 +47,64 @@ const styles = StyleSheet.create({
         borderRadius: 63,
         borderWidth: 4,
         borderColor: "white",
-        marginBottom:10,
-        alignSelf:'center',
+        marginBottom: 10,
+        alignSelf: 'center',
         position: 'absolute',
-        marginTop:130
-    },
-    name:{
-        fontSize:22,
-        color:"#000",
-        fontWeight:'600',
-    },
-    body:{
-        marginTop:40,
-    },
-    bodyContent: {
-        flex: 1,
-        alignItems: 'center',
-        padding:30,
+        marginTop: 50
     },
 
-    info:{
-        fontSize:16,
-        color: "#000",
-        marginTop:10
+    body: {
+        marginTop: 40,
     },
-    description:{
-        fontSize:16,
-        color: "#000",
-        marginTop:10,
-        textAlign: 'center'
+
+
+    info: {
+
+        marginTop: 70,
+        textAlign: 'center',
+        // marginLeft: 20,
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: 'black',
+
     },
+
+    info2: {
+
+        marginTop: 10,
+        textAlign: 'center',
+        // marginLeft: 20,
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black',
+
+    },
+    info3: {
+        marginTop: 10,
+        textAlign: 'center',
+        // marginLeft: 20,
+        fontSize: 10,
+        fontWeight: 'bold',
+        color: 'black',
+    },
+
     buttonContainer: {
-        marginTop:10,
-        height:45,
+        height: 45,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom:20,
-        width:250,
-        borderRadius:30,
-        backgroundColor: "#00BFFF",
+        alignSelf: 'center',
+        width: 250,
+        borderRadius: 5,
+        backgroundColor: '#ffc830',
     },
+
+    // bottom: {
+    //     alignSelf: 'flex-end'
+    // },
+    // container: {
+    //     backgroundColor: 'red',
+    //     flex: 1,
+    // }
+
 });

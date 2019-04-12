@@ -141,6 +141,6 @@ export default class MovieDetail extends Component {
                 </ScrollView>
             );
         }
-        return <Text>Sorry, there is no selected movie</Text>
+        return <Text>We are sorry there is no selected movie</Text>
     }
 }

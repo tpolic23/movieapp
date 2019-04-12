@@ -1,138 +1,255 @@
 import React, {Component} from "react";
-import {Text, View, Image, ScrollView, StyleSheet, TextInput, Button, TouchableOpacity, Linking} from "react-native";
-import MovieList from './MovieList';
+import {
+    Text,
+    View,
+    Image,
+    ScrollView,
+    StyleSheet,
+    TextInput,
+    Button,
+    TouchableOpacity,
+    Linking,
+    Alert
+} from "react-native";
+import {SafeAreaView} from 'react-navigation';
+import {AsyncStorage} from 'react-native';
+
 
 export default class Enter extends Component {
 
     state = {
-        movie: null,
+        error: null,
+        username: '',
+        password: '',
         isLoading: false,
     };
 
-    componentDidMount() {
-        const {navigation} = this.props;
-        const id = navigation.getParam('id');
+    validate = (reqtoken) => {
+        /**
+         * Fetching the authentication token to validate with login for session
+         */
 
-        this.setState({isLoading: true});
+        fetch('https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=df7dcf624bfe76dee38127fa88121b87', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+                request_token: reqtoken
+            }),
 
-        fetch('https://api.themoviedb.org/3/movie/' + id + '?api_key=df7dcf624bfe76dee38127fa88121b87&language=en-US')
+        })
             .then((response) => {
                 this.setState({isLoading: false});
                 return response.json();
             })
             .then((responseJson) => {
                 console.log(responseJson);
-                this.setState({movie: responseJson});
+                if (responseJson && responseJson.success) {
+                    this.createSession(responseJson.request_token);
+
+                } else {
+                    this.setState({error: 'error'});
+                }
             })
             .catch((error) => {
+                this.setState({isLoading: false, error: 'error'});
+                console.error(error);
+            });
+
+    };
+
+    createSession = (reqtoken) => {
+        fetch('https://api.themoviedb.org/3/authentication/session/new?api_key=df7dcf624bfe76dee38127fa88121b87', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                request_token: reqtoken,
+            }),
+        })
+            .then((response) => {
                 this.setState({isLoading: false});
+                return response.json();
+            })
+            .then((responseJson) => {
+                console.log(responseJson);
+                if (responseJson && responseJson.success) {
+                    console.log('success');
+                    this._storeData(responseJson.session_id);
+
+                } else {
+                    this.setState({error: 'error'});
+                }
+            })
+            .catch((error) => {
+                this.setState({isLoading: false, error: 'error'});
+                console.error(error);
+            });
+    };
+
+    login = () => {
+
+        this.setState({isLoading: true});
+        /**
+         * Fetching the token to get request token number for session
+         */
+        fetch('https://api.themoviedb.org/3/authentication/token/new?api_key=df7dcf624bfe76dee38127fa88121b87')
+            .then((response) => {
+                this.setState({isLoading: false});
+                return response.json();
+            })
+            .then((responseJson) => {
+                console.log(responseJson);
+                if (responseJson && responseJson.success) {
+                    this.validate(responseJson.request_token)
+                } else {
+                    this.setState({error: 'error'});
+                }
+            })
+            .catch((error) => {
+                this.setState({isLoading: false, error: 'error'});
                 console.error(error);
             });
     }
-
+    _storeData = async (session) => {
+        try {
+            console.log('store data ' + session);
+            await AsyncStorage.setItem('MDB_session', session);
+        } catch (error) {
+            console.log(error)
+            // Error saving data
+        }
+    };
+    _retrieveData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('TASKS');
+            if (value !== null) {
+                // We have data!!
+                console.log(value);
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
 
     static navigationOptions = {
         header: null
     };
+
     render() {
-        const { navigate } = this.props.navigation;
+        const {navigate} = this.props.navigation;
         return (
-            <View style={styles.container}>
-                <Text style={styles.title}>MDB</Text>
-                <Image source={require('./img/2.png')}
-                       style={{width: 300, height: 320, alignItem: 'center',marginLeft: 50}}/>
-                <TextInput
-                    style={styles.input}
-                    placeholder={"Username"}
-                    placeholderTextColor={'#fff'}
-                    onChangeText={(text) => this.setState({input: text})}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder={"Password"}
-                    placeholderTextColor={'#fff'}
-                    onChangeText={(text) => this.setState({input: text})}
-                />
-                <TouchableOpacity style={{
+            <SafeAreaView style={styles.container}>
+                <View style={styles.container}>
+                    <Text style={styles.title}>MDB</Text>
 
-                    width:200,
-                    alignSelf: 'center',
-                    marginBottom: 15,
-                    marginTop: 10,
-                    backgroundColor: 'rgba(182,182,182, 0.7)',
-                    borderColor: 'rgba(182,182,182, 0.7)',
-                    borderWidth: 1,
-                    borderRadius: 5,
+                    <View style={styles.imageContainer}>
+                        <Image source={require('./img/2.png')}
+                               style={{width: 250, height: 260}}/>
+                    </View>
 
+                    <View style={styles.formContainer}>
+                        <TextInput
+                            style={styles.input}
+                            textContentType="username"
+                            autoCapitalize="none"
+                            placeholder={"Username"}
+                            placeholderTextColor={'#fff'}
+                            onChangeText={(text) => this.setState({username: text})}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            textContentType="password"
+                            secureTextEntry
+                            autoCapitalize="none"
+                            placeholder={"Password"}
+                            placeholderTextColor={'#fff'}
+                            onChangeText={(text) => this.setState({password: text})}
+                        />
+                        <TouchableOpacity style={{
+                            width: 200,
+                            alignSelf: 'center',
+                            marginBottom: 5,
+                            marginTop: 15,
+                            backgroundColor: 'rgba(182,182,182, 0.7)',
+                            borderColor: 'rgba(182,182,182, 0.7)',
+                            borderWidth: 1,
+                            borderRadius: 5,
+                        }}>
+                            <Button
+                                onPress={() => this.login()}
+                                title="Log In"
+                                color="#ffff"
+                            />
+                        </TouchableOpacity>
 
-                }}>
-                <Button
+                        <Text style={{textAlign: 'center',}}>Or</Text>
 
-                    onPress={() => navigate('')}
-                    title="Log In"
-                />
-                </TouchableOpacity>
+                        <TouchableOpacity style={{
+                            backgroundColor: '#f7455b',
+                            width: 200,
+                            alignSelf: 'center',
+                            marginTop: 5,
+                            borderRadius: 5,
+                            color: "white"
 
+                        }}>
+                            <Button
+                                onPress={() => navigate('First')}
+                                title="Skip"
+                                color="#ffff"
+                            />
+                        </TouchableOpacity>
 
+                        <Text style={{color: 'blue', textAlign: "center", marginBottom: 10, marginTop: 20}}
+                              onPress={() => Linking.openURL('https://www.themoviedb.org/')}>
+                            Don't have account? Click here!
+                        </Text>
+                    </View>
+                </View>
+            </SafeAreaView>
 
-                <Text style={{textAlign:'center',}}>Or</Text>
-
-
-
-                <TouchableOpacity style={{
-                    backgroundColor: '#f7455b',
-                    borderColor: '#f7455b',
-                    width:200,
-                    alignSelf: 'center',
-                    marginTop: 15,
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    color: "white"
-
-                }}>
-                <Button
-                    onPress={() => navigate('First')}
-                    title="Skip"
-                />
-                </TouchableOpacity>
-
-
-
-
-                <Text style={{color: 'blue',textAlign:"center",marginTop:60}}
-                      onPress={() => Linking.openURL('https://www.themoviedb.org/')}>
-                    Don't have account? Click here!
-                </Text>
-
-            </View>
         );
     }
-
-
 }
+
 const styles = StyleSheet.create(
     {
         container: {
-        flex: 1,
-        backgroundColor:'#ffc830',
-},
-        title:{
-            // fontSize:30,
-
-            marginTop: 70,
-            textAlign:'center',
-            marginLeft: 20,
+            flex: 1,
+            backgroundColor: '#ffc830',
+        },
+        title: {
+            flex: 1,
+            marginTop: 20,
+            textAlign: 'center',
             fontSize: 60,
             fontWeight: 'bold',
-
         },
-        input:{
+        imageContainer: {
+            flex: 5,
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+        },
+        input: {
             height: 40,
             padding: 6,
             borderRadius: 5,
-            color:'black',
-            margin: 10,
+            color: 'black',
+            marginTop: 5,
+            marginBottom: 5,
+            marginLeft: 10,
+            marginRight: 10,
             backgroundColor: 'rgba(182,182,182, 0.7)',
+        },
+        formContainer: {
+            flexDirection: 'column',
+        },
 
-        }
-});
+    });
