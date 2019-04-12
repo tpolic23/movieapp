@@ -37,31 +37,34 @@ const TabNavigator = createBottomTabNavigator({
             navigationOptions: {
                 tabBarLabel: 'Trending',
                 tabBarIcon: ({tintColor, activeTintColor}) => (
-                    <Icon name="film" size={20} color={tintColor} />
+                    <Icon name="film" size={20} color={tintColor}/>
                 )
             },
         },
-        TopRated: {screen: TopRated,
+        TopRated: {
+            screen: TopRated,
             navigationOptions: {
                 tabBarLabel: 'Top Rated',
                 tabBarIcon: ({tintColor, activeTintColor}) => (
-                    <Icon name="star" size={20} color={tintColor} />
+                    <Icon name="star" size={20} color={tintColor}/>
                 )
             },
         },
-        TVShows: {screen: TVShows,
+        TVShows: {
+            screen: TVShows,
             navigationOptions: {
                 tabBarLabel: 'TV Shows',
                 tabBarIcon: ({tintColor, activeTintColor}) => (
-                    <Icon name="tv" size={20} color={tintColor} />
+                    <Icon name="tv" size={20} color={tintColor}/>
                 )
             },
         },
-        Stars: {screen: People,
+        Stars: {
+            screen: People,
             navigationOptions: {
                 tabBarLabel: 'Stars',
                 tabBarIcon: ({tintColor, activeTintColor}) => (
-                    <Icon name="users" size={20} color={tintColor} />
+                    <Icon name="users" size={20} color={tintColor}/>
                 )
             },
         },
@@ -70,7 +73,7 @@ const TabNavigator = createBottomTabNavigator({
             navigationOptions: {
                 tabBarLabel: 'Profile',
                 tabBarIcon: ({tintColor, activeTintColor}) => (
-                    <Icon name="user-o" size={20} color={tintColor} />
+                    <Icon name="user-o" size={20} color={tintColor}/>
                 )
             },
 
@@ -93,7 +96,7 @@ const TabNavigator = createBottomTabNavigator({
         }
     });
 
-TabNavigator.navigationOptions = ({ navigation }) => {
+TabNavigator.navigationOptions = ({navigation}) => {
     const index = navigation.state.index;
     const title = navigation.state.routes[index].routeName;
     return {
@@ -103,21 +106,21 @@ TabNavigator.navigationOptions = ({ navigation }) => {
              * Search icon (button) instead real button added
              */
             <Icon name="search" size={23}
-        style={{flex: 1, alignSelf: 'center', marginRight: 20}}
-                  onPress={() => navigation.navigate('Search')}  color="gray"/>
+                  style={{flex: 1, alignSelf: 'center', marginRight: 20}}
+                  onPress={() => navigation.navigate('Search')} color="gray"/>
         ),
     };
 };
 
 const Stack = createStackNavigator({
-    Main:{screen:Enter},
+    Main: {screen: Enter},
     First: {screen: TabNavigator},
     MovieDetail: {screen: MovieDetail},
     PeopleDetail: {screen: PeopleDetail},
     TVDetail: {screen: TVDetail},
     Search: {screen: Search}
 }, {
-    initialRouteName: 'Main',
+    initialRouteName: 'First',
 });
 
 export default createAppContainer(Stack, TabNavigator);

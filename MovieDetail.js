@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
         marginTop: 10,
-        marginBottom:20,
+        marginBottom: 20,
         fontSize: 20
     },
     overview: {
@@ -72,12 +72,14 @@ export default class MovieDetail extends Component {
         const {movie, isLoading} = this.state;
 
         if (isLoading) {
-            return <Text style={{alignSelf:'center', fontSize:20,fontWeight:'bold', paddingTop:260}}>Loading</Text>
+            return <Text style={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold', paddingTop: 260}}>Loading</Text>
         }
 
         if (movie) {
-            const {title, release_date, original_language, runtime,
-                overview, status, vote_average, vote_count, popularity, poster_path} = movie;
+            const {
+                title, release_date, original_language, runtime,
+                overview, status, vote_average, vote_count, popularity, poster_path, budget
+            } = movie;
 
             return (
                 <ScrollView style={{flex: 1}}>
@@ -110,8 +112,8 @@ export default class MovieDetail extends Component {
 
 
                         <Image source={{uri: 'https://image.tmdb.org/t/p/w780/' + poster_path + ''}}
-                               style={{width: 300, height: 420, marginTop: 10, alignItem: 'center',marginLeft: 35}}/>
-                        <View style={{flexDirection: 'row', justifyContent: 'center',marginTop:10}}>
+                               style={{width: 300, height: 420, marginTop: 10, alignItem: 'center', marginLeft: 35}}/>
+                        <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 10}}>
 
                             <Text style={{
                                 flex: 100,
@@ -134,8 +136,7 @@ export default class MovieDetail extends Component {
                         <Text style={[styles.overview]}> {overview}</Text>
 
                         <Text style={[styles.popularity]}>Popularity: {popularity}</Text>
-
-
+                        <Text style={[styles.popularity]}>Budget: {budget}$</Text>
 
                     </View>
                 </ScrollView>

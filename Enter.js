@@ -18,10 +18,21 @@ import {AsyncStorage} from 'react-native';
 export default class Enter extends Component {
 
     state = {
-        error: null,
         username: '',
         password: '',
         isLoading: false,
+    };
+
+    alertError = (message) => {
+        Alert.alert(
+            'Login',
+            message,
+            [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            {cancelable: false},
+        );
+        // TO DO napraviti alert error https://facebook.github.io/react-native/docs/alert
     };
 
     validate = (reqtoken) => {
@@ -50,14 +61,13 @@ export default class Enter extends Component {
                 console.log(responseJson);
                 if (responseJson && responseJson.success) {
                     this.createSession(responseJson.request_token);
-
                 } else {
-                    this.setState({error: 'error'});
+                    this.alertError(responseJson.status_message);
                 }
             })
             .catch((error) => {
-                this.setState({isLoading: false, error: 'error'});
-                console.error(error);
+                this.setState({isLoading: false});
+                this.alertError(error);
             });
 
     };
@@ -82,14 +92,14 @@ export default class Enter extends Component {
                 if (responseJson && responseJson.success) {
                     console.log('success');
                     this._storeData(responseJson.session_id);
-
+                    this.props.navigation.navigate('First');
                 } else {
-                    this.setState({error: 'error'});
+                    this.alertError(responseJson.status_message);
                 }
             })
             .catch((error) => {
-                this.setState({isLoading: false, error: 'error'});
-                console.error(error);
+                this.alertError(error);
+                this.setState({isLoading: false});
             });
     };
 
@@ -109,14 +119,20 @@ export default class Enter extends Component {
                 if (responseJson && responseJson.success) {
                     this.validate(responseJson.request_token)
                 } else {
-                    this.setState({error: 'error'});
+                    this.alertError(responseJson.status_message);
                 }
             })
             .catch((error) => {
-                this.setState({isLoading: false, error: 'error'});
-                console.error(error);
+                this.setState({isLoading: false});
+                this.alertError(error);
             });
-    }
+    };
+
+    skip = () => {
+        this._storeData('GUEST')
+        this.props.navigation.navigate('First');
+    };
+
     _storeData = async (session) => {
         try {
             console.log('store data ' + session);
@@ -124,17 +140,6 @@ export default class Enter extends Component {
         } catch (error) {
             console.log(error)
             // Error saving data
-        }
-    };
-    _retrieveData = async () => {
-        try {
-            const value = await AsyncStorage.getItem('TASKS');
-            if (value !== null) {
-                // We have data!!
-                console.log(value);
-            }
-        } catch (error) {
-            // Error retrieving data
         }
     };
 
@@ -157,6 +162,7 @@ export default class Enter extends Component {
                     <View style={styles.formContainer}>
                         <TextInput
                             style={styles.input}
+                            value={this.state.username}
                             textContentType="username"
                             autoCapitalize="none"
                             placeholder={"Username"}
@@ -201,7 +207,7 @@ export default class Enter extends Component {
 
                         }}>
                             <Button
-                                onPress={() => navigate('First')}
+                                onPress={this.skip}
                                 title="Skip"
                                 color="#ffff"
                             />
